@@ -14,17 +14,18 @@ def aggregate_crossref_data(directory):
                 json_data = json.load(file)
                 data.append(json_data)
 
-    # Convert the list of JSON objects to a pandas DataFrame
-    df = pd.DataFrame(data)
-    return df
+    return data
+
+def convert_to_dataframe(data):
+    return pd.json_normalize(data)
 
 def export_to_csv(df, output_file):
     df.to_csv(output_file, index=False)
 
-
 if __name__ == "__main__":
     directory = '/Users/jocelynpender/Documents/02 - AREAS/Career/2025 Update/Crossref/interview-prep/sample-data/sample_dataset'
-    df = aggregate_crossref_data(directory)
+    data = aggregate_crossref_data(directory)
+    df = convert_to_dataframe(data)
     
     output_file = '/Users/jocelynpender/Documents/02 - AREAS/Career/2025 Update/Crossref/interview-prep/sample-data/aggregated_data.csv'
     export_to_csv(df, output_file)
